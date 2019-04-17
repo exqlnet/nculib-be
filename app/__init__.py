@@ -13,3 +13,5 @@ def create_app(config_name="default"):
 
     from app.book import book_blueprint
     app.register_blueprint(book_blueprint, url_prefix="/api/book")
+
+    return app

@@ -161,13 +161,13 @@ for i, data in tqdm(enumerate(result)):
         author = Author(name=res["author"])
 
     book = Book(name=res["name"], press_time=res["press_time"], isbn=res["isbn"],
-                price=res["price"], classify=res["classify"], total_page=res["total_page"], summary=res["summary"],
+                price=res["price"], classification=res["classify"], total_page=res["total_page"], summary=res["summary"],
                 category=category, author=author, press=press)
     db.session.add(book)
     # cu.execute("insert into ")
     # print(res)
     # print(res["isbn"], is_isbn(res["isbn"]))
-    # print(res)
+    # print(res)python
 
 db.session.commit()
 

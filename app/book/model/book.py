@@ -7,13 +7,16 @@ class Book(db.Model):
 
     book_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), nullable=False, index=True)
-    press_time = db.Column(db.Date())
-    press = db.Column(db.String(128))
+    press_time = db.Column(db.String(128))
     isbn = db.Column(db.String(128))
-    price = db.Column(db.DECIMAL(5, 2))
+    price = db.Column(db.DECIMAL(8, 2))
     classify = db.column(db.String(128))  # 分类号
     total_page = db.Column(db.Integer)
     summary = db.column(db.Text)
+
+    press = db.relationship("Press")
+    author = db.relationship("Author")
+    category = db.relationship("Category")
 
     press_id = db.Column(db.Integer, db.ForeignKey("press.press_id"))
     author_id = db.Column(db.Integer, db.ForeignKey("authors.author_id"))

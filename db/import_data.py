@@ -2,7 +2,6 @@
 from app import create_app
 from app.book.model.book import *
 from pymongo import MongoClient
-from pprint import pprint
 import re
 mongo = MongoClient("mongodb://localhost:27017")
 
@@ -78,7 +77,7 @@ def parse_one(dic):
     if dic.get("载体形态项:"):
         """页数"""
         try:
-            res["total_page"] = re.findall("(.+?)页", dic.get("载体形态项:"))[0]
+            res["total_page"] = re.findall(r"(\d+?)页", dic.get("载体形态项:"))[0]
         except Exception:
             res["discard"] = True
 
@@ -135,7 +134,7 @@ for p in Press.query.all():
 discards = []
 from tqdm import tqdm
 for i, data in tqdm(enumerate(result)):
-    if i > 1000000:
+    if i > 100:
         break
     # parse_one(data)
     res = parse_one(data)
@@ -147,23 +146,23 @@ for i, data in tqdm(enumerate(result)):
         category = Category.query.filter_by(name=res["category"]).first()
     else:
         category = Category(name=res["category"])
+        db.session.add(category)
 
     if res["press"] in presses:
         press = Press.query.filter_by(name=res["press"]).first()
+        db.session.add(press)
     else:
         press = Press(name=res["press"])
 
     if res["author"] in authors:
         author = Author.query.filter_by(name=res["author"]).first()
+        db.session.add(author)
     else:
         author = Author(name=res["author"])
 
-    book = Book(name=res["name"], press_time=res["press_time"], press=res["press"], isbn=res["isbn"],
+    book = Book(name=res["name"], press_time=res["press_time"], isbn=res["isbn"],
                 price=res["price"], classify=res["classify"], total_page=res["total_page"], summary=res["summary"],
-                category_id=category.category_id, author_id=author.author_id, press_id=press.press_id)
-    db.session.add(press)
-    db.session.add(author)
-    db.session.add(category)
+                category=category, author=author, press=press)
     db.session.add(book)
     # cu.execute("insert into ")
     # print(res)

@@ -11,6 +11,19 @@ datas = mongo.lib.datas
 
 result = datas.find({})
 
+# delete_sum = 0
+# for r in result:
+#     # print(len(r))
+#     if len(r) <= 2:
+#         datas.delete_one(r)
+#         print(delete_sum)
+#         delete_sum += 1
+    # if not r.get("题名/责任者:"):
+    #     print(r)
+    #     continue
+    # print(r["题名/责任者:"])
+# exit(0)
+
 
 def parse_one(dic):
     res = {
@@ -38,7 +51,7 @@ def parse_one(dic):
             res["isbn"] = s[0].split(" ")[0]
 
             _reg = re.findall(r"\d+\.{0,1}\d+", s[1])
-            res["price"] = float(_reg[0]) if _reg else "不明"
+            res["price"] = float(_reg[0]) if _reg else 0.00
 
         if not is_isbn(res["isbn"]):
             res["isbn"] = "不明"
@@ -134,13 +147,14 @@ for p in Press.query.all():
 discards = []
 from tqdm import tqdm
 for i, data in tqdm(enumerate(result)):
-    if i > 100:
-        break
+    if not i > 500:
+        continue
     # parse_one(data)
     res = parse_one(data)
 
     if res["discard"]:
         discards.append(res)
+        continue
     """开始导入"""
     if res["category"] in categories:
         category = Category.query.filter_by(name=res["category"]).first()
@@ -162,14 +176,14 @@ for i, data in tqdm(enumerate(result)):
 
     book = Book(name=res["name"], press_time=res["press_time"], isbn=res["isbn"],
                 price=res["price"], classification=res["classify"], total_page=res["total_page"], summary=res["summary"],
-                category=category, author=author, press=press)
+                category=category, author=author, press=press, lib_id=data.get("key"))
     db.session.add(book)
     # cu.execute("insert into ")
     # print(res)
     # print(res["isbn"], is_isbn(res["isbn"]))
     # print(res)python
 
-db.session.commit()
+    db.session.commit()
 
 with open("discards.txt", "w") as file:
     import json

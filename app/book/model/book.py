@@ -13,6 +13,7 @@ class Book(db.Model):
     classification = db.Column(db.String(128))  # 分类号
     total_page = db.Column(db.Integer)
     summary = db.Column(db.Text)
+    lib_id = db.Column(db.String(128))  # 对应图书馆url里的id
 
     press = db.relationship("Press")
     author = db.relationship("Author")

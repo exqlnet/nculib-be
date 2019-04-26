@@ -28,7 +28,7 @@ class BookQuery(Resource):
                 "page": pagination.page
             }
         else:
-
+            # todo 全文索引查找
             books = []
             for i, book in Book.query:
                 if i > 20:

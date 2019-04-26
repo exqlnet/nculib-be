@@ -26,6 +26,18 @@ class Book(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("authors.author_id"))
     category_id = db.Column(db.Integer, db.ForeignKey("category.category_id"))
 
+    def to_json(self):
+        return {
+            "bookId": self.book_id,
+            "bookName": self.name,
+            "pressTime": self.press_time,
+            "isbn": self.isbn,
+            "price": self.price,
+            "classification": self.classification,
+            "totalPage": self.total_page,
+            "summary": self.summary
+        }
+
 
 class Author(db.Model):
     """作者"""

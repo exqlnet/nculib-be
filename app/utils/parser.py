@@ -9,7 +9,8 @@ def add_args(args, location="json"):
             name=arg[0],
             type=arg[1],
             required=arg[2],
-            help=arg[3],
+            default=arg[3],
+            help=arg[4],
             location=location
         )
     return req_parser

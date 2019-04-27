@@ -3,6 +3,7 @@ import json
 from flask_restful import Resource
 from app import db
 from app.utils.dbtool import to_dic
+from app.utils.decorators import login_required
 
 
 def get_recommend_books(subjects):
@@ -18,6 +19,7 @@ def get_recommend_books(subjects):
 
 class Recommend(Resource):
 
+    @login_required
     def get(self):
         pref_subjects = Subject.query.filter(Subject.subject_id.in_(json.loads(g.current_user.preference)))
         books = get_recommend_books(pref_subjects)

@@ -24,7 +24,7 @@ def create_app(config_name="default"):
     @app.before_request
     def before():
         from app.user.model.user import User
-        open_id = request.headers["open_id"]
+        open_id = request.headers.get("wx_open_id")
         g.current_user = User.query.filter_by(open_id=open_id).first()
 
     @app.after_request

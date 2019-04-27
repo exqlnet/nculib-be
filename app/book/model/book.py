@@ -32,7 +32,7 @@ class Book(db.Model):
             "bookName": self.name,
             "pressTime": self.press_time,
             "isbn": self.isbn,
-            "price": self.price,
+            "price": float(self.price),
             "classification": self.classification,
             "totalPage": self.total_page,
             "summary": self.summary

@@ -19,5 +19,5 @@ def create_app(config_name="default"):
 
     app.app_context().push()
     db.create_all()
-    flask_whooshalchemyplus.index_all(app)
+    # flask_whooshalchemyplus.index_all(app)
     return app

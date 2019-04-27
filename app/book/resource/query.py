@@ -28,14 +28,9 @@ class BookQuery(Resource):
                 "page": pagination.page
             }
         else:
-            # todo 全文索引查找
-            books = []
-            for i, book in Book.query:
-                if i > 20:
-                    break
-                books.append(book.to_json())
+            books = Book.query.whoosh_search(args["key"]).all()
             return {
                 "status": 0,
                 "message": "获取成功",
-                "data": books,
+                "data": [book.to_json() for book in books],
             }

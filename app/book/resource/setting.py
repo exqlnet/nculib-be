@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from app.book.model.book import Subject, Category, db
 from app.utils.parser import add_args
+from app.utils.decorators import login_required
 import json
 from flask import g
 
@@ -18,6 +19,7 @@ class SubjectSetting(Resource):
 
 
 class UserSubjectSetting(Resource):
+    method_decorators = login_required
 
     def get(self):
         """获取推送设置"""

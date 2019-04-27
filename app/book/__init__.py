@@ -11,5 +11,5 @@ book_api = Api(book_blueprint)
 
 book_api.add_resource(BookQuery, "/query")
 book_api.add_resource(SubjectSetting, "/subject/setting")
-book_api.add_resource(UserSubjectSetting, "/subject")
+book_api.add_resource(UserSubjectSetting, "/subject/info")
 book_api.add_resource(Recommend, "/recommend")

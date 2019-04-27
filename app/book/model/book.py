@@ -1,10 +1,12 @@
 from app import db
+from jieba.analyse.analyzer import ChineseAnalyzer
 
 
 class Book(db.Model):
     """图书信息"""
     __tablename__ = "books"
     __searchable__ = ["name", "isbn", "classification", "summary"]
+    __analyzer__ = ChineseAnalyzer()
 
     book_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), nullable=False, index=True)

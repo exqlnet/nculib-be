@@ -26,10 +26,11 @@ def create_app(config_name="default"):
         from app.user.model.user import User
         open_id = request.headers.get("wx_open_id")
         user = User.query.filter_by(open_id=open_id).first()
-        if (not user) & (type(open_id) == str) & (len(open_id) > 6):
-            user = User(open_id=open_id)
-            db.session.add(user)
-            db.session.commit()
+        if (not user) & (type(open_id) == str):
+            if  len(open_id) > 6:
+                user = User(open_id=open_id)
+                db.session.add(user)
+                db.session.commit()
         g.current_user = user
 
     @app.after_request

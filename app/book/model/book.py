@@ -75,4 +75,3 @@ class Subject(db.Model):
             "subject_id": self.subject_id,
             "name": self.name
         }
-

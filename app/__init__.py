@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, g, request
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 import flask_whooshalchemyplus
@@ -20,4 +20,16 @@ def create_app(config_name="default"):
     app.app_context().push()
     db.create_all()
     # flask_whooshalchemyplus.index_all(app)
+
+    @app.before_request
+    def before():
+        from app.user.model.user import User
+        open_id = request.headers["open_id"]
+        g.current_user = User.query.filter_by(open_id=open_id).first()
+
+    @app.after_request
+    def after(response):
+        response.headers["Tech"] = "NCUHOME 2019"
+        return response
+
     return app

@@ -26,7 +26,7 @@ class UserSubjectSetting(Resource):
         return {
             "status": 1,
             "message": "获取成功",
-            "data": json.loads(g.current_user.setting)
+            "data": [subject.to_json() for subject in Subject.query.filter(Subject.subject_id.in_(json.loads(g.current_user.preference)))]
         }
 
     def put(self):
@@ -41,7 +41,7 @@ class UserSubjectSetting(Resource):
                 "status": 0,
                 "message": "提交有误",
             }
-        g.current_user.setting = json.dumps(subject_ids)
+        g.current_user.preference = json.dumps(subject_ids)
         db.session.commit()
         return {
             "status": 1,

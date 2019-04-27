@@ -73,5 +73,5 @@ class Subject(db.Model):
     def to_json(self):
         return {
             "subject_id": self.subject_id,
-            "name": self.name
+            "subject_name": self.name
         }

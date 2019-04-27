@@ -1,12 +1,10 @@
 from app import db
-from jieba.analyse.analyzer import ChineseAnalyzer
 
 
 class Book(db.Model):
     """图书信息"""
     __tablename__ = "books"
     __searchable__ = ["name", "isbn", "classification", "summary"]
-    __analyzer__ = ChineseAnalyzer()
 
     book_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), nullable=False, index=True)
@@ -67,7 +65,7 @@ class BookRecommendCategory(db.Model):
     """书籍推荐目录设置"""
     __tablename__ = "book_recommend_category"
 
-    rc_id = db.Column(db.Integer)
+    rc_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
 
 

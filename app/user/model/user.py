@@ -1,8 +1,10 @@
 from app import db
+from datetime import datetime
 
 
 class User(db.Model):
     __tablename__ = "user"
 
     user_id = db.Column(db.Integer, primary_key=True)
-    access_key = db.Column(db.String(256), unique=True)
+    open_id = db.Column(db.String(256), unique=True)
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)

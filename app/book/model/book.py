@@ -63,16 +63,16 @@ class Category(db.Model):
     name = db.Column(db.String(128), index=True)
 
 
-class BookRecommendCategory(db.Model):
-    """书籍推荐目录设置"""
+class Subject(db.Model):
+    """书籍推荐的学科设置"""
     __tablename__ = "book_recommend_category"
 
-    rc_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
+    subject_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True)
 
-
-user_category_setting = db.Table(
-    db.Column("user_id", db.Integer, db.ForeignKey("user.user_id"), primary_key=True),
-    db.Column("rc_id", db.Integer, db.ForeignKey("book_recommend_category.rc_id"), primary_key=True)
-)
+    def to_json(self):
+        return {
+            "subject_id": self.subject_id,
+            "name": self.name
+        }
 

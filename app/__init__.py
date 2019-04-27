@@ -25,7 +25,12 @@ def create_app(config_name="default"):
     def before():
         from app.user.model.user import User
         open_id = request.headers.get("wx_open_id")
-        g.current_user = User.query.filter_by(open_id=open_id).first()
+        user = User.query.filter_by(open_id=open_id).first()
+        if not user:
+            user = User(open_id=open_id)
+            db.session.add(user)
+            db.session.commit()
+        g.current_user = user
 
     @app.after_request
     def after(response):

@@ -9,7 +9,7 @@ def to_dic(sql, params=None, name_list=None):
         data = db.session.execute(sql, params).fetchall()
     except Exception as e:
         print(e)
-        return None
+        return []
     result = list()
     if not name_list is None:
         for row in data:

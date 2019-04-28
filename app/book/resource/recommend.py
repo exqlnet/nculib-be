@@ -11,11 +11,14 @@ def get_recommend_books(subjects):
     sql = """
     select book_id, books.name, press_time, isbn, price, classification, total_page, summary, c.name from books
     left join category c on books.category_id = c.category_id
+    {}
     order by rand()
     limit 20
     """
     where = "where " + " or ".join(["c.name like '%{}%'".format(subject.name) for subject in subjects])
-    sql += where
+    print(where)
+
+    sql = sql.format(where)
     return to_dic(sql, None, ["book_id", "bookName", "press_time", "isbn", "price", "classification", "total_page", "summary", "categoryName"])
 
 

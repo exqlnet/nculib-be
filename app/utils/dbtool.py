@@ -1,5 +1,6 @@
 from app import db
 from datetime import datetime, date
+from decimal import Decimal
 
 
 def to_dic(sql, params=None, name_list=None):
@@ -18,6 +19,8 @@ def to_dic(sql, params=None, name_list=None):
                     dic[name] = row[i].strftime('%Y-%m-%d %H:%M:%S')
                 elif isinstance(row[i], date):
                     dic[name] = row[i].strftime('%Y-%m-%d')
+                elif isinstance(row[i], Decimal):
+                    dic[name] = float(row[i])
                 else:
                     dic[name] = row[i]
                 i = i + 1

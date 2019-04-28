@@ -1,4 +1,5 @@
 from flask import Flask, g, request
+import json
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 import flask_whooshalchemyplus
@@ -27,7 +28,7 @@ def create_app(config_name="default"):
         open_id = request.headers.get("wx_open_id")
         user = User.query.filter_by(open_id=open_id).first()
         if (not user) & (type(open_id) == str):
-            if  len(open_id) > 6:
+            if len(open_id) > 6:
                 user = User(open_id=open_id)
                 db.session.add(user)
                 db.session.commit()
@@ -37,5 +38,4 @@ def create_app(config_name="default"):
     def after(response):
         response.headers["Tech"] = "NCUHOME 2019"
         return response
-
     return app

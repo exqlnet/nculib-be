@@ -19,7 +19,7 @@ class SubjectSetting(Resource):
 
 
 class UserSubjectSetting(Resource):
-    method_decorators = login_required
+    method_decorators = [login_required]
 
     def get(self):
         """获取推送设置"""
@@ -33,9 +33,9 @@ class UserSubjectSetting(Resource):
         """修改推送设置"""
         args = add_args([
             ["subjects", list, True, [], "哪些category？"]
-        ])
-        subject_ids = list(filter(lambda x: type(x) == int, args["categories"]))
-        subjects = Subject.query.filter(Subject.subject_id.in_(subject_ids))
+        ]).parse_args()
+        subject_ids = list(filter(lambda x: type(x) == int, args["subjects"]))
+        subjects = Subject.query.filter(Subject.subject_id.in_(subject_ids)).all()
         if len(subjects) != len(subject_ids):
             return {
                 "status": 0,

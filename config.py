@@ -6,6 +6,7 @@ class Default:
 
 class Development(Default):
 
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:123456@fucheng360.top/nculib?charset=utf8"
 
 

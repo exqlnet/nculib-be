@@ -4,13 +4,15 @@ from flask_restful import Resource
 from app import db
 from app.utils.dbtool import to_dic
 from app.utils.decorators import login_required
+from flask import g
 
 
 def get_recommend_books(subjects):
     sql = """
     select book_id, books.name, press_time, isbn, price, classification, total_page, summary, c.name from books
     left join category c on books.category_id = c.category_id
-    
+    order by rand()
+    limit 20
     """
     where = "where " + " or ".join(["c.name like '%{}%'".format(subject.name) for subject in subjects])
     sql += where

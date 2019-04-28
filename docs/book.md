@@ -56,7 +56,10 @@
     "isbn": "isbn",
     "classification": "中法图书号",
     "totalPage": "本书总页数",
-    "summary": "简介"
+    "summary": "简介",
+    "press": "出版社",
+    "author": "作者",
+    "cover": "封面图片URL"
   }]
 }
 ```

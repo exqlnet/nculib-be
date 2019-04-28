@@ -38,6 +38,7 @@ class Book(db.Model):
             "summary": self.summary,
             "author": self.author.name,
             "press": self.press.name,
+            "category": self.category.name,
             "cover": "https://img3.doubanio.com/view/subject/l/public/s32266692.jpg"
         }
 

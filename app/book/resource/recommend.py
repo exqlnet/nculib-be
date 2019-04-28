@@ -11,7 +11,7 @@ from sqlalchemy.sql.expression import func
 
 def get_recommend_books(subjects):
     sql = """
-    select book_id, books.name, press_time, isbn, price, classification, total_page, summary, c.name, a.name, p.name from books
+    select book_id, books.name, press_time, isbn, price, classification, total_page, summary, c.name, a.name, p.name, 'https://img3.doubanio.com/view/subject/l/public/s32266692.jpg' from books
     left join category c on books.category_id = c.category_id
     left join authors a on books.author_id = a.author_id
     left join press p on books.press_id = p.press_id
@@ -23,7 +23,7 @@ def get_recommend_books(subjects):
     if not subjects:
         return []
     sql = sql.format(where)
-    return to_dic(sql, None, ["book_id", "bookName", "press_time", "isbn", "price", "classification", "total_page", "summary", "categoryName", "author", "press"])
+    return to_dic(sql, None, ["bookId", "bookName", "pressTime", "isbn", "price", "classification", "totalPage", "summary", "category", "author", "press", "cover"])
 
 
 class Recommend(Resource):

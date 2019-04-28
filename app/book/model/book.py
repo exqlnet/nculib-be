@@ -35,7 +35,10 @@ class Book(db.Model):
             "price": float(self.price),
             "classification": self.classification,
             "totalPage": self.total_page,
-            "summary": self.summary
+            "summary": self.summary,
+            "author": self.author.name,
+            "press": self.press.name,
+            "cover": "https://img3.doubanio.com/view/subject/l/public/s32266692.jpg"
         }
 
 

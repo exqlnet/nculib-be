@@ -23,7 +23,7 @@ class BookQuery(Resource):
             return {
                 "status": 0,
                 "message": "获取成功",
-                "data": [book.to_json() for book in pagination.items],
+                "data": [book.to_json_brief() for book in pagination.items],
                 "total_page": pagination.total,
                 "page": pagination.page
             }
@@ -32,7 +32,7 @@ class BookQuery(Resource):
             return {
                 "status": 0,
                 "message": "获取成功",
-                "data": [book.to_json() for book in books],
+                "data": [book.to_json_brief() for book in books],
             }
 
 

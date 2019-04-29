@@ -23,10 +23,13 @@ class UserSubjectSetting(Resource):
 
     def get(self):
         """获取推送设置"""
+
+        subjects = Subject.query.all()
+        pref_subject_ids = json.loads(g.current_user.preference)
         return {
             "status": 1,
             "message": "获取成功",
-            "data": [subject.to_json() for subject in Subject.query.filter(Subject.subject_id.in_(json.loads(g.current_user.preference)))]
+            "data": [subject.to_json_user(pref_subject_ids) for subject in subjects]
         }
 
     def put(self):

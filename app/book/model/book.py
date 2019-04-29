@@ -79,3 +79,10 @@ class Subject(db.Model):
             "subject_id": self.subject_id,
             "subject_name": self.name
         }
+
+    def to_json_user(self, ids):
+        return {
+            "subject_id": self.subject_id,
+            "subject_name": self.name,
+            "checked": self.subject_id in ids
+        }

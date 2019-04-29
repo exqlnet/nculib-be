@@ -11,7 +11,7 @@ from sqlalchemy.sql.expression import func
 
 def get_recommend_books(subjects):
     sql = """
-    select book_id, books.name, press_time, isbn, price, classification, total_page, summary, c.name, a.name, p.name, 'https://img3.doubanio.com/view/subject/l/public/s32266692.jpg' from books
+    select book_id, books.name, summary, a.name, 'https://img3.doubanio.com/view/subject/l/public/s32266692.jpg' from books
     left join category c on books.category_id = c.category_id
     left join authors a on books.author_id = a.author_id
     left join press p on books.press_id = p.press_id
@@ -26,7 +26,7 @@ def get_recommend_books(subjects):
     if not subjects:
         return []
     sql = sql.format(where)
-    return to_dic(sql, None, ["bookId", "bookName", "pressTime", "isbn", "price", "classification", "totalPage", "summary", "category", "author", "press", "cover"])
+    return to_dic(sql, None, ["bookId", "bookName", "summary", "author", "cover"])
 
 
 class Recommend(Resource):
@@ -35,7 +35,7 @@ class Recommend(Resource):
     def get(self):
         pref_subjects = Subject.query.filter(Subject.subject_id.in_(json.loads(g.current_user.preference))).all()
         if not pref_subjects:
-            books = [book.to_json() for book in Book.query.order_by(func.rand()).limit(20).all()]
+            books = [book.to_json_brief() for book in Book.query.order_by(func.rand()).limit(20).all()]
         else:
             # filters = or_(*[Category.name.like("%" + subject.name + "%") for subject in pref_subjects])
             # books = Book.query.filter(filters).order_by(func.rand()).limit(20).all()

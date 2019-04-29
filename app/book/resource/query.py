@@ -34,3 +34,21 @@ class BookQuery(Resource):
                 "message": "获取成功",
                 "data": [book.to_json() for book in books],
             }
+
+
+class BookDetail(Resource):
+
+    def get(self, book_id):
+
+        book = Book.query.get(book_id)
+        if not book:
+            return {
+                "status": 0,
+                "message": "找不到这本书"
+            }
+
+        return {
+            "status": 1,
+            "message": "获取成功",
+            "data": book.to_json_detail()
+        }

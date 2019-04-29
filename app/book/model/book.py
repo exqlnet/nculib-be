@@ -26,7 +26,16 @@ class Book(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("authors.author_id"))
     category_id = db.Column(db.Integer, db.ForeignKey("category.category_id"))
 
-    def to_json(self):
+    def to_json_brief(self):
+        return {
+            "bookId": self.book_id,
+            "bookName": self.name,
+            "summary": self.summary,
+            "cover": "https://img3.doubanio.com/view/subject/l/public/s32266692.jpg",
+            "author": self.author.name
+        }
+
+    def to_json_detail(self):
         return {
             "bookId": self.book_id,
             "bookName": self.name,

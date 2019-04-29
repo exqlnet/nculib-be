@@ -11,8 +11,8 @@
   "status": 1,
   "message": "获取成功",
   "data": [{
-    "subject_id": "学科ID",
-    "subject_name": "学科名"
+    "subjectId": "学科ID",
+    "subjectName": "学科名"
   }]
 }
 ```
@@ -27,7 +27,10 @@
 {
   "status": 1,
   "message": "获取成功",
-  
+  "data": [{
+    "subjectId": "int, 学科ID",
+    "subjectName": "str, 学科名称"
+  }] 
 }
 ```
 

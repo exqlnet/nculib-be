@@ -20,7 +20,7 @@ class UserCollect(Resource):
     def post(self):
         """收藏一本书"""
         args = add_args([
-            ["bookId", int, True, "哪本书？"]
+            ["bookId", int, True, 0, "哪本书？"]
         ]).parse_args()
         book = Book.query.get(args["bookId"])
         if not book:
@@ -37,7 +37,7 @@ class UserCollect(Resource):
 
     def delete(self):
         """取消收藏一本书"""
-        args = add_args([["bookId", int, True, "哪本书？"]]).parse_args()
+        args = add_args([["bookId", int, True, 0, "哪本书？"]]).parse_args()
         book = Book.query.get(args["bookId"])
         if not book:
             return {

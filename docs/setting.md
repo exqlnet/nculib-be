@@ -29,7 +29,8 @@
   "message": "获取成功",
   "data": [{
     "subjectId": "int, 学科ID",
-    "subjectName": "str, 学科名称"
+    "subjectName": "str, 学科名称",
+    "checked": "bool, 是否设置"
   }] 
 }
 ```

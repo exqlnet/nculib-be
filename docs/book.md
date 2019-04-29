@@ -27,14 +27,8 @@
   "data": [{
     "bookId": "书籍ID",
     "bookName": "书名",
-    "pressTime": "发行时间",
-    "isbn": "isbn",
-    "classification": "中法图书号",
-    "totalPage": "本书总页数",
     "summary": "简介",
-    "press": "出版社",
     "author": "作者",
-    "category": "学科分类",
     "cover": "封面图片URL"
   }]
 }
@@ -56,6 +50,29 @@
   "data": [{
     "bookId": "书籍ID",
     "bookName": "书名",
+    "summary": "简介",
+    "author": "作者",
+    "cover": "封面图片URL"
+  }]
+}
+```
+
+### 获取书籍详情
+
+##### URL: /api/book/detail/\<int:id\>
+
+##### Method: GET
+
+##### 返回
+
+// 成功
+```json
+{
+  "status": 1,
+  "message": "获取成功",
+  "data": {
+    "bookId": "书籍ID",
+    "bookName": "书名",
     "pressTime": "发行时间",
     "isbn": "isbn",
     "classification": "中法图书号",
@@ -65,7 +82,15 @@
     "author": "作者",
     "category": "学科分类",
     "cover": "封面图片URL"
-  }]
+  }
 }
 ```
 
+// 找不到这本书
+```json
+{
+  "status": 0,
+  "message": "找不到这本书"
+}
+
+```

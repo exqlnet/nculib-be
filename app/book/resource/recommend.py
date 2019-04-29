@@ -19,7 +19,10 @@ def get_recommend_books(subjects):
     order by rand()
     limit 20
     """
-    where = "where " + " or ".join(["c.name like '%{}%'".format(subject.name) for subject in subjects])
+    subject_names = []
+    for subject in subjects:
+        subject_names.extend(subject.name.split("、"))
+    where = "where " + " or ".join(["c.name like '%{}%'".format(name) for name in subject_names])
     if not subjects:
         return []
     sql = sql.format(where)

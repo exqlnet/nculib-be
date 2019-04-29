@@ -14,4 +14,4 @@ book_api.add_resource(SubjectSetting, "/subject/setting")
 book_api.add_resource(UserSubjectSetting, "/subject/info")
 book_api.add_resource(Recommend, "/recommend")
 
-book_api.add_resource(BookDetail, "/detail")
+book_api.add_resource(BookDetail, "/detail/<int:book_id>")

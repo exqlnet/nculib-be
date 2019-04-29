@@ -1,0 +1,11 @@
+version: '2'
+services:
+  nculib-be:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ".:/nculib-be"
+    ports:
+      - "8501:80"

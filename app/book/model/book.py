@@ -32,10 +32,14 @@ class Book(db.Model):
             "bookName": self.name,
             "pressTime": self.press_time,
             "isbn": self.isbn,
-            "price": self.price,
+            "price": float(self.price),
             "classification": self.classification,
             "totalPage": self.total_page,
-            "summary": self.summary
+            "summary": self.summary,
+            "author": self.author.name,
+            "press": self.press.name,
+            "category": self.category.name,
+            "cover": "https://img3.doubanio.com/view/subject/l/public/s32266692.jpg"
         }
 
 
@@ -63,16 +67,22 @@ class Category(db.Model):
     name = db.Column(db.String(128), index=True)
 
 
-class BookRecommendCategory(db.Model):
-    """书籍推荐目录设置"""
+class Subject(db.Model):
+    """书籍推荐的学科设置"""
     __tablename__ = "book_recommend_category"
 
-    rc_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
+    subject_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True)
 
+    def to_json(self):
+        return {
+            "subjectId": self.subject_id,
+            "subjectName": self.name
+        }
 
-user_category_setting = db.Table(
-    db.Column("user_id", db.Integer, db.ForeignKey("user.user_id"), primary_key=True),
-    db.Column("rc_id", db.Integer, db.ForeignKey("book_recommend_category.rc_id"), primary_key=True)
-)
-
+    def to_json_user(self, ids):
+        return {
+            "subjectId": self.subject_id,
+            "subjectName": self.name,
+            "checked": self.subject_id in ids
+        }

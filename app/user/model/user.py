@@ -19,6 +19,10 @@ class User(db.Model):
 
     collect_books = db.relationship("Book", secondary=user_collect, backref='user')
     search_history = db.relationship("Book")
+    interest_books = db.relationship("Book", backref='user')
+    # 感兴趣书目设定为: (1)借>7天(>1k pages)/3天(>500 pages)/2天(<=500 pages) and 续>=1次 and 逾<续
+    #                or(2)今日-借书日 < 15天  (加权)
+    # 每次登陆更新感兴趣书目
 
     def get_id(self):
         return str(self.user_id)  # 最好是学号

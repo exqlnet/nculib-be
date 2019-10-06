@@ -15,7 +15,7 @@ class BookQuery(Resource):
         ], "args").parse_args()
 
         if not args.get("fulltext", False):
-            """根据题名查找"""
+            """根据书名查找"""
             pagination = Book.query.filter(Book.name.like("%{}%".format(args.get("key"))))\
                 .paginate(per_page=args.get("per_page"),
                           page=args.get("page"), error_out=True)
@@ -28,11 +28,14 @@ class BookQuery(Resource):
                 "page": pagination.page
             }
         else:
-            books = Book.query.whoosh_search(args["key"]).all()
+            books = Book.query.whoosh_search(args["key"]).all()\
+                .serch(limit=args.get("page") * args.get("per_page"))
             return {
                 "status": 0,
                 "message": "获取成功",
-                "data": [book.to_json_brief() for book in books],
+                "data": [book.to_json_brief() for book in books.items],
+                "total_page": books.total,
+                "page": books.page
             }
 
 
